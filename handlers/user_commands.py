@@ -11,4 +11,4 @@ router = Router()
 
 @router.message(CommandStart())
 async def start_command(message: Message):
-    ...
+    await message.answer("salom, botga xush kelibsiz!\n\n")
