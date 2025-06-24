@@ -32,7 +32,7 @@ class Database:
 # <---------------USER----------------->
     async def user_exists(self, user_id):
         async with aiosqlite.connect(self.db_path) as conn:
-            async with conn.execute('SELECT * FROM users WHERE user_id = ?', (user_id,)) as cursor:
+            async with conn.execute('SELECT * FROM users WHERE user_id = ?', (user_id)) as cursor:
                 result = await cursor.fetchone()
                 return bool(result)
               
