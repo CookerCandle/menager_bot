@@ -13,5 +13,3 @@ class Config(BaseSettings):
         env_file=".env",  # Load environment variables from .env file
         env_file_encoding="utf-8",  # Encoding for the .env file
     )
-
-config = Config()  # Create an instance of the Config class to access settings
