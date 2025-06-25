@@ -3,7 +3,7 @@ from aiogram.filters import CommandStart, Command
 from aiogram.types import Message, BotCommand, BotCommandScopeDefault
 from aiogram.fsm.context import FSMContext
 
-from config import Config as cfg
+from config import config as cfg
 from data.database import Database
 
 from markups.reply import main_menu, remove_keyboard
