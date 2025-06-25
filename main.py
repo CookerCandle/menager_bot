@@ -5,7 +5,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
-from handlers import user_commands, user_messages
+from handlers import user_commands, user_messages, survey
 from callbacks import user_call
 
 from midlewares.check_sub import CheckSubscription
@@ -26,6 +26,7 @@ async def main():
     dp.include_routers(
         user_commands.router,
         user_call.router,
+        survey.router,
         user_messages.router,
     )
 
