@@ -43,8 +43,18 @@ class Database:
 
 
 # <---------------ADMIN----------------->
-    async def get_chanels(self):
+    async def get_channels(self):
         async with aiosqlite.connect(self.db_path) as conn:
             async with conn.execute('SELECT name, link, member FROM channels') as cursor:
                 result = await cursor.fetchall()
                 return result
+            
+    async def add_channel(self, name, link, member):
+        async with aiosqlite.connect(self.db_path) as conn:
+            await conn.execute('INSERT INTO channels (name, link, member) VALUES (?, ?, ?)', (name, link, member))
+            await conn.commit()
+
+    async def delete_channel(self, name):
+        async with aiosqlite.connect(self.db_path) as conn:
+            await conn.execute('DELETE FROM channels WHERE name = ?', (name,))
+            await conn.commit()
