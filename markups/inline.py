@@ -52,3 +52,15 @@ def exness_profile_markup():
         ]
     )
     return exness_profile
+
+
+def admin_confirm_markup(id):
+    admin_confirm = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text="✅ Tasdiqlash ✅", callback_data=f"admin_confirm_{id}_yes"),
+                InlineKeyboardButton(text="❌ habar yozish ❌", callback_data=f"admin_confirm_{id}_no")
+            ]
+        ]
+    )
+    return admin_confirm
