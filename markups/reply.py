@@ -46,3 +46,18 @@ def remove_keyboard():
         selective=True
     )
 
+
+def admin_menu():
+    menu = ReplyKeyboardMarkup(
+        keyboard=[
+            [
+                KeyboardButton(text="Kanal qo'shish"),
+                KeyboardButton(text="Kanalni o'chirish")
+            ],
+            [
+                KeyboardButton(text="Kanallar ro'yxatini ko'rish"),
+                KeyboardButton(text="🔙 Orqaga")
+            ]
+        ]
+    )
+    return menu
