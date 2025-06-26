@@ -58,6 +58,10 @@ def admin_menu():
                 KeyboardButton(text="Kanallar ro'yxatini ko'rish"),
                 KeyboardButton(text="🔙 Orqaga")
             ]
-        ]
+        ],
+        resize_keyboard=True,
+        input_field_placeholder="Berilgan tugmalardan bittasini tanlang",
+        one_time_keyboard=True,
+        selective=True
     )
     return menu
