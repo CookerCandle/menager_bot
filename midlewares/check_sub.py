@@ -12,7 +12,7 @@ db = Database()
 
 # check_sub.py
 async def check_user_subscription(bot, user_id):
-    channels = await db.get_chanels()
+    channels = await db.get_channels()
     not_subscribed = []
 
     if channels:
