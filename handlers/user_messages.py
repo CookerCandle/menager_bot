@@ -33,7 +33,7 @@ async def handle_admin_request(message: Message, bot: Bot):
     if message.text == "📊 Admin":
         await message.answer("📝 Admin profili --> @SbGroup0712", reply_markup=main_menu())
     elif message.text == "📈 SB bilan aloqa":
-        await message.answer("+99877-***-**-**", reply_markup=rmk())
+        await message.answer("+99877-***-**-**", reply_markup=main_menu())
 
 
 @router.message()
