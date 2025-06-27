@@ -32,13 +32,17 @@ from .check_sub import check_user_subscription
 
 class CheckSubscription(BaseMiddleware):
     async def __call__(self, handler, event: Message, data):
-        not_subscribed = await check_user_subscription(event.bot, event.from_user.id)
+        if event.chat.type == "private":
+            
+            not_subscribed = await check_user_subscription(event.bot, event.from_user.id)
 
-        if not_subscribed:
-            await event.answer(
-                "Botdan foydalanish uchun kanallarga obuna bo'lishingiz kerak:",
-                reply_markup=get_channels_markup(not_subscribed)
-            )
-            return
+            if not_subscribed:
+                await event.answer(
+                    "Botdan foydalanish uchun kanallarga obuna bo'lishingiz kerak:",
+                    reply_markup=get_channels_markup(not_subscribed)
+                )
+                return
 
-        return await handler(event, data)
+            return await handler(event, data)
+        else:
+            pass
