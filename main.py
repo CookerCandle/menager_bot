@@ -9,6 +9,7 @@ from handlers import user_commands, user_messages, survey, admin_commands, add_c
 from callbacks import user_call
 
 from midlewares.check_sub import CheckSubscription
+from midlewares.check_private import PrivateChat
 
 from config import config as cfg
 from data.database import Database
@@ -22,6 +23,7 @@ async def main():
     db = Database()
 
     dp.message.middleware(CheckSubscription())
+    dp.message.middleware(PrivateChat())
 
     dp.include_routers(
         user_commands.router,
