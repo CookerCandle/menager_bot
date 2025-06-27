@@ -41,7 +41,7 @@ async def handle_lesson_selection(callback: CallbackQuery):
     
     await callback.answer(f"Siz {lesson_type} darslikni tanladingiz.")
     if lesson_type == "online":
-        await callback.message.answer("🔧 Online darsliklar bo'limi hali tayyorlanmoqda.")
+        await callback.message.answer("Online darsliklar mavjud. Batafsil ma'lumot admindan olsangiz bo'ladi\n@sbgroup0712", reply_markup=main_menu())
     elif lesson_type == "offline":
         await callback.message.answer("🔧 Offline darsliklar bo'limi hali tayyorlanmoqda", reply_markup=main_menu())
 
