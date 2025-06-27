@@ -20,7 +20,7 @@ async def handler_experience(message: Message, state: FSMContext):
     await state.set_state(Survey.confirm)
 
     await message.answer("Guruxga qo'shilish uchun, biz hamkor bo'lgan brockerga, bizning havolamiz orqali ro'yxatdan o'tishingiz kerak.\n\n")
-    await message.answer("<a href='https://one.exnesstrack.org/a/zmhzwlylc9'>EXNESS</a>", reply_markup=exness_profile_markup())
+    await message.answer(f"<a href='https://one.exnesstrack.org/a/zmhzwlylc9'>👉EXNESS👈</a>", reply_markup=exness_profile_markup())
 
 
 @router.message(Survey.expirience, F.voice)
@@ -29,19 +29,20 @@ async def handler_experience_voice(message: Message, state: FSMContext):
     await state.set_state(Survey.confirm)
 
     await message.answer("Guruxga qo'shilish uchun, biz hamkor bo'lgan brockerga, bizning havolamiz orqali ro'yxatdan o'tishingiz kerak.\n\n")
-    await message.answer("<a href='https://one.exnesstrack.org/a/zmhzwlylc9'>EXNESS</a>", reply_markup=exness_profile_markup())
+    await message.answer(f"<a href='https://one.exnesstrack.org/a/zmhzwlylc9'>👉EXNESS👈</a>", reply_markup=exness_profile_markup())
 
 
 @router.callback_query(Survey.confirm, F.data.startswith("exness_profile_"))
 async def handler_confirm(callback: CallbackQuery, state: FSMContext):
-    await callback.message.edit_text("<a href='https://one.exnesstrack.org/a/zmhzwlylc9'>EXNESS</a>")
+    await callback.message.edit_reply_markup(reply_markup=None)
 
     exness_profile = callback.data.split("exness_profile_")[1]
 
     if exness_profile == "yes":
-        await callback.message.answer_video(FSInputFile("sources/lesson.mp4"), caption="Shu videodagi ko'rsatmalarga amal qiling va screenshot yuboring.")
+        await callback.message.edit_text("<b>PARTNER LINK</b>👇👇👇\nhttps://one.exnesstrack.org/a/zmhzwlylc9")   
+        # await callback.message.answer_video(FSInputFile("sources/lesson-for-new.MOV"), caption="Shu videodagi ko'rsatmalarga amal qiling va screenshot yuboring.")
     elif exness_profile == "no":
-        await callback.message.answer_video(FSInputFile("sources/lesson.mp4"), caption="Shu videodagi ko'rsatmalarga amal qiling va screenshot yuboring.")
+        await callback.message.answer_video(FSInputFile("sources/lesson-for-new.MOV"), caption="Shu videodagi ko'rsatmalarga amal qiling va screenshot yuboring.")
 
 
 @router.message(Survey.confirm, F.photo)
