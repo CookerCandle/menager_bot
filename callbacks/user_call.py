@@ -12,6 +12,9 @@ from markups.inline import get_channels_markup
 
 from utils.states import Survey
 
+from config import config as cfg
+from data.create_link import create_link
+
 router = Router()
 db = Database()
 
@@ -26,7 +29,8 @@ async def recheck_subscription(callback: CallbackQuery):
             reply_markup=get_channels_markup(not_subscribed)
         )
     else:
-        await callback.message.edit_text("✅ Obuna tasdiqlandi! Botdan foydalanishingiz mumkin.")
+        await callback.message.edit_text("✅ Obuna tasdiqlandi!")
+        await callback.message.answer("Botdan foydalanishingiz mumkin.", reply_markup=main_menu())
         # тут можно вызвать следующее действие (например, отправить меню или т.д.)
 
 
@@ -50,3 +54,19 @@ async def handle_experience_selection(callback: CallbackQuery, state: FSMContext
     await state.set_state(Survey.expirience)
     await state.update_data(experience=experience_level)
     await callback.message.answer("Savdo sistemasida qanday muammolaringiz bor?\nShu bo'yicha qisqacha malumot bering.\n\n<i>Text yoki golosovoy tashlang</i>",)
+
+
+@router.callback_query(F.data.startswith("admin_confirm_"))
+async def handle_admin_confirmation(callback: CallbackQuery, state: FSMContext, bot: Bot):
+    user_id = callback.data.split("admin_confirm_")[1].split("_")[0]
+
+    await callback.message.edit_reply_markup(reply_markup=None)
+    
+    if callback.data.endswith("yes"):
+        await create_link(user_id, bot)
+    elif callback.data.endswith("no"):
+        await bot.send_message(
+            chat_id=int(user_id),
+            text="Sizga guruhga qo'shilish uchun admin tomonidan ruxsat berilmadi. @sbgroup0712 ga yozing.",
+            reply_markup=main_menu()
+        )
