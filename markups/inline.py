@@ -44,10 +44,11 @@ def exness_profile_markup():
     exness_profile = InlineKeyboardMarkup(
         inline_keyboard=[
             [
-                InlineKeyboardButton(text="✅ Bu brockerdan ro'yxatdan o'tganman ✅", callback_data="exness_profile_yes")
+                InlineKeyboardButton(text="❌ Bu brokerda yangiman ❌", callback_data="exness_profile_no")
+                
             ],
             [
-                InlineKeyboardButton(text="❌ Bu brockerdan yangiman ❌", callback_data="exness_profile_no")
+                InlineKeyboardButton(text="✅ Bu brokerdan ro'yxatdan o'tganman ✅", callback_data="exness_profile_yes")
             ]
         ]
     )
