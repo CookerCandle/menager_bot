@@ -1,6 +1,6 @@
 from aiogram import Router, Bot
 from aiogram.filters import CommandStart, Command
-from aiogram.types import Message, BotCommand, BotCommandScopeDefault
+from aiogram.types import Message, BotCommand, BotCommandScopeAllPrivateChats
 from aiogram.fsm.context import FSMContext
 
 from config import config as cfg
@@ -14,8 +14,12 @@ router = Router()
 
 
 @router.message(CommandStart())
-async def start_command(message: Message, state: FSMContext) -> None:
+async def start_command(message: Message, state: FSMContext, bot: Bot) -> None:
     await state.clear()
+
+    commands = [BotCommand(command="start", description="start")]
+    
+    await bot.set_my_commands(commands, scope=BotCommandScopeAllPrivateChats())
 
     if not await db.user_exists(message.from_user.id):
         await db.add_user(message.from_user.id)
