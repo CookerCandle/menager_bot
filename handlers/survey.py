@@ -1,6 +1,9 @@
+import asyncio
+
 from aiogram import F, Router, Bot
 from aiogram.types import Message, CallbackQuery, FSInputFile
 from aiogram.fsm.context import FSMContext
+from aiogram.enums.chat_action import ChatAction
 
 from data.database import Database
 from utils.states import Survey
@@ -33,16 +36,20 @@ async def handler_experience_voice(message: Message, state: FSMContext):
 
 
 @router.callback_query(Survey.confirm, F.data.startswith("exness_profile_"))
-async def handler_confirm(callback: CallbackQuery, state: FSMContext):
+async def handler_confirm(callback: CallbackQuery, state: FSMContext, bot: Bot):
     await callback.message.edit_reply_markup(reply_markup=None)
 
     exness_profile = callback.data.split("exness_profile_")[1]
 
     if exness_profile == "yes":
         await callback.message.edit_text("<b>PARTNER LINK</b>👇👇👇\nhttps://one.exnesstrack.org/a/zmhzwlylc9")   
-        # await callback.message.answer_video(FSInputFile("sources/lesson-for-new.MOV"), caption="Shu videodagi ko'rsatmalarga amal qiling va screenshot yuboring.")
+        await bot.send_chat_action(callback.from_user.id, ChatAction.UPLOAD_VIDEO)
+        await asyncio.sleep(0.5)
+        await callback.message.answer_video(FSInputFile("sources/lesson-for-old.MOV"), caption="<b>Shu videodagi ko'rsatmalarga amal qiling va screenshot yuboring.</b>")
     elif exness_profile == "no":
-        await callback.message.answer_video(FSInputFile("sources/lesson-for-new.MOV"), caption="Shu videodagi ko'rsatmalarga amal qiling va screenshot yuboring.")
+        await bot.send_chat_action(callback.from_user.id, ChatAction.UPLOAD_VIDEO)
+        await asyncio.sleep(0.5)
+        await callback.message.answer_video(FSInputFile("sources/lesson-for-new.MOV"), caption="<b>Shu videodagi ko'rsatmalarga amal qiling va screenshot yuboring.</b>")
 
 
 @router.message(Survey.confirm, F.photo)
