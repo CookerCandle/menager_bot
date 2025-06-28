@@ -63,7 +63,14 @@ async def handle_admin_confirmation(callback: CallbackQuery, state: FSMContext, 
     await callback.message.edit_reply_markup(reply_markup=None)
     
     if callback.data.endswith("yes"):
-        await create_link(user_id, bot)
+        invite = await create_link(user_id, bot)
+        if  invite is None:
+            return
+        await bot.send_message(
+            chat_id=int(user_id),
+            text=f"Tabriklaymiz, siz guruhga qabul qilindingiz. Shu link orqali qo'shilsangiz bo'ladi: {invite.invite_link}",
+            reply_markup=main_menu()
+        )
     elif callback.data.endswith("no"):
         await bot.send_message(
             chat_id=int(user_id),
