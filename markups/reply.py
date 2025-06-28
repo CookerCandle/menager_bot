@@ -15,7 +15,7 @@ def main_menu():
         ],
         resize_keyboard=True,
         input_field_placeholder="Berilgan tugmalardan bittasini tanlang",
-        one_time_keyboard=True,
+        one_time_keyboard=False,
         selective=True
     )
     return menu
