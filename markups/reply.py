@@ -57,6 +57,9 @@ def admin_menu():
             [
                 KeyboardButton(text="Kanallar ro'yxatini ko'rish"),
                 KeyboardButton(text="🔙 Orqaga")
+            ],
+            [
+                KeyboardButton(text="📨Habar yuborish"),
             ]
         ],
         resize_keyboard=True,
