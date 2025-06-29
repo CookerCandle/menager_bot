@@ -5,7 +5,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
-from handlers import user_commands, user_messages, survey, admin_commands, add_channel, admin_messages, dal_channel
+from handlers import user_commands, user_messages, survey, admin_commands, add_channel, admin_messages, dal_channel, send_message
 from callbacks import user_call
 
 from midlewares.check_sub import CheckSubscription
@@ -33,6 +33,7 @@ async def main():
         add_channel.router,
         dal_channel.router,
         user_call.router,
+        send_message.router,
         survey.router,
         admin_messages.router,
         user_messages.router,

@@ -39,7 +39,7 @@ async def admin_messages(message: Message, state: FSMContext):
         else:
             await message.answer("Kanallar mavjud emas!", reply_markup=admin_menu())  
     elif message.text == "📨Habar yuborish":
-        await state.set_state(SendMessage.meessage)
+        await state.set_state(SendMessage.message)
         await message.answer("Habarni yuboring:", reply_markup=rmk())
         
 
