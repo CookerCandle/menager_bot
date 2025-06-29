@@ -1,12 +1,12 @@
-
 from aiogram import F, Router, Bot
 from aiogram.types import CallbackQuery
-from aiogram.enums.chat_action import ChatAction
 from aiogram.fsm.context import FSMContext
+from aiogram.exceptions import TelegramBadRequest
 
 from markups.reply import main_menu
 
 from data.database import Database
+from data.links import admin_profile
 from midlewares.check_sub import check_user_subscription
 from markups.inline import get_channels_markup
 
@@ -24,14 +24,21 @@ async def recheck_subscription(callback: CallbackQuery):
     not_subscribed = await check_user_subscription(callback.bot, callback.from_user.id)
 
     if not_subscribed:
-        await callback.message.edit_text(
-            "Hali ham barcha kanallarga obuna bo'lmagansiz.",
-            reply_markup=get_channels_markup(not_subscribed)
-        )
+        try:
+            await callback.message.edit_text(
+                "Hali ham barcha kanallarga obuna bo'lmagansiz.",
+                reply_markup=get_channels_markup(not_subscribed)
+            )
+        except TelegramBadRequest as e:
+            if "message is not modified" not in str(e):
+                raise
     else:
-        await callback.message.edit_text("✅ Obuna tasdiqlandi!")
+        try:
+            await callback.message.edit_text("✅ Obuna tasdiqlandi!")
+        except TelegramBadRequest as e:
+            if "message is not modified" not in str(e):
+                raise
         await callback.message.answer("Botdan foydalanishingiz mumkin.", reply_markup=main_menu())
-        # тут можно вызвать следующее действие (например, отправить меню или т.д.)
 
 
 @router.callback_query(F.data.startswith("lesson_"))
@@ -41,7 +48,7 @@ async def handle_lesson_selection(callback: CallbackQuery):
     
     await callback.answer(f"Siz {lesson_type} darslikni tanladingiz.")
     if lesson_type == "online":
-        await callback.message.answer("Online darsliklar mavjud. Batafsil ma'lumot admindan olsangiz bo'ladi\n@sbgroup0712", reply_markup=main_menu())
+        await callback.message.answer(f"Online darsliklar mavjud. Batafsil ma'lumot admindan olsangiz bo'ladi\n{admin_profile}", reply_markup=main_menu())
     elif lesson_type == "offline":
         await callback.message.answer("🔧 Offline darsliklar bo'limi hali tayyorlanmoqda", reply_markup=main_menu())
 
@@ -74,6 +81,6 @@ async def handle_admin_confirmation(callback: CallbackQuery, state: FSMContext, 
     elif callback.data.endswith("no"):
         await bot.send_message(
             chat_id=int(user_id),
-            text="Sizga guruhga qo'shilish uchun admin tomonidan ruxsat berilmadi. @sbgroup0712 ga yozing.",
+            text=f"Sizga guruhga qo'shilish uchun admin tomonidan ruxsat berilmadi. {admin_profile} ga yozing.",
             reply_markup=main_menu()
         )
