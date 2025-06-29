@@ -6,6 +6,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.enums.chat_action import ChatAction
 
 from data.database import Database
+from data.links import exness_link, partner_link
 from utils.states import Survey
 
 from markups.inline import exness_profile_markup, admin_confirm_markup
@@ -23,7 +24,7 @@ async def handler_experience(message: Message, state: FSMContext):
     await state.set_state(Survey.confirm)
 
     await message.answer("Guruxga qo'shilish uchun, biz hamkor bo'lgan brockerga, bizning havolamiz orqali ro'yxatdan o'tishingiz kerak.\n\n")
-    await message.answer(f"<a href='https://one.exnesstrack.org/a/zmhzwlylc9'>👉EXNESS👈</a>", reply_markup=exness_profile_markup())
+    await message.answer(f"<a href='{exness_link}'>👉EXNESS👈</a>", reply_markup=exness_profile_markup())
 
 
 @router.message(Survey.expirience, F.voice)
@@ -32,7 +33,7 @@ async def handler_experience_voice(message: Message, state: FSMContext):
     await state.set_state(Survey.confirm)
 
     await message.answer("Guruxga qo'shilish uchun, biz hamkor bo'lgan brockerga, bizning havolamiz orqali ro'yxatdan o'tishingiz kerak.\n\n")
-    await message.answer(f"<a href='https://one.exnesstrack.org/a/zmhzwlylc9'>👉EXNESS👈</a>", reply_markup=exness_profile_markup())
+    await message.answer(f"<a href='{exness_link}'>👉EXNESS👈</a>", reply_markup=exness_profile_markup())
 
 
 @router.callback_query(Survey.confirm, F.data.startswith("exness_profile_"))
@@ -42,7 +43,7 @@ async def handler_confirm(callback: CallbackQuery, state: FSMContext, bot: Bot):
     exness_profile = callback.data.split("exness_profile_")[1]
 
     if exness_profile == "yes":
-        await callback.message.edit_text("<b>PARTNER LINK</b>👇👇👇\nhttps://one.exnesstrack.org/a/zmhzwlylc9")   
+        await callback.message.edit_text(f"<b>PARTNER LINK</b>👇👇👇\n{partner_link}")   
         await bot.send_chat_action(callback.from_user.id, ChatAction.UPLOAD_VIDEO)
         await asyncio.sleep(0.5)
         await callback.message.answer_video(FSInputFile("sources/lesson-for-old.MOV"), caption="<b>Shu videodagi ko'rsatmalarga amal qiling va screenshot yuboring.</b>")

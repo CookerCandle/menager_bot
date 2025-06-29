@@ -2,6 +2,7 @@ from aiogram import F, Router, Bot
 from aiogram.types import Message, FSInputFile 
 
 from data.database import Database
+from data.links import instagram, tel_number, admin_profile
 
 from markups.reply import remove_keyboard as rmk
 from markups.reply import main_menu, admin_request
@@ -18,7 +19,7 @@ async def handle_button_click(message: Message, bot: Bot):
         await message.answer("SB communityga ulanish uchun so'rovnomadan o'ting:", reply_markup=rmk())
         await message.answer("Trading soxasida qancha tajribaga egasiz?", reply_markup=experience_markup())
     elif message.text == "🎥 Instagram":
-        await message.answer_photo(FSInputFile("sources/instagram.jpg"), caption="<a href='https://www.instagram.com/sbtradinguz?igsh=ZHdya3RxajBxa3E4'>⭐️Bizning Instagram⭐️</a>", reply_markup=main_menu())
+        await message.answer_photo(FSInputFile("sources/instagram.jpg"), caption=f"<a href='{instagram}'>⭐️Bizning Instagram⭐️</a>", reply_markup=main_menu())
     elif message.text == "📚 Darsliklar":
         await message.answer("Darslik turini tanlang:", reply_markup=lessons_markup())
     elif message.text == "☎️ Biz bilan aloqa":
@@ -31,9 +32,9 @@ async def handle_button_click(message: Message, bot: Bot):
 @router.message(F.text.in_(["📊 Admin", "📈 SB bilan aloqa"]))
 async def handle_admin_request(message: Message, bot: Bot):
     if message.text == "📊 Admin":
-        await message.answer("📝 Admin profili --> @SbGroup0712", reply_markup=main_menu())
+        await message.answer(f"📝 Admin profili --> {admin_profile}", reply_markup=main_menu())
     elif message.text == "📈 SB bilan aloqa":
-        await message.answer("+99877-***-**-**", reply_markup=main_menu())
+        await message.answer(tel_number, reply_markup=main_menu())
 
 
 @router.message()
