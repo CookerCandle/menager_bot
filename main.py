@@ -10,6 +10,7 @@ from callbacks import user_call
 
 from midlewares.check_sub import CheckSubscription
 from midlewares.check_private import PrivateChat
+from midlewares.anti_flood import AntiFloodMiddleware
 
 from config import config as cfg
 from data.database import Database
@@ -24,6 +25,7 @@ async def main():
 
     dp.message.middleware(CheckSubscription())
     dp.message.middleware(PrivateChat())
+    dp.message.middleware(AntiFloodMiddleware(time_limit=1))
 
     dp.include_routers(
         user_commands.router,
