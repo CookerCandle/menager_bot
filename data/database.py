@@ -58,3 +58,9 @@ class Database:
         async with aiosqlite.connect(self.db_path) as conn:
             await conn.execute('DELETE FROM channels WHERE name = ?', (name,))
             await conn.commit()
+
+    async def get_users(self):
+        async with aiosqlite.connect(self.db_path) as conn:
+            async with conn.execute('SELECT user_id FROM users') as cursor:
+                result = await cursor.fetchall()
+                return result

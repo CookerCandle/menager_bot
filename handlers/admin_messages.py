@@ -3,7 +3,7 @@ from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 
 from data.database import Database
-from utils.states import ChannelAdd, ChannelDelete
+from utils.states import ChannelAdd, ChannelDelete, SendMessage
 
 
 from config import config as cfg
@@ -15,7 +15,7 @@ router = Router()
 db = Database()
 
 
-@router.message(F.text.in_(["Kanal qo'shish", "Kanalni o'chirish", "Kanallar ro'yxatini ko'rish"]), F.from_user.id.in_(cfg.admins))
+@router.message(F.text.in_(["Kanal qo'shish", "Kanalni o'chirish", "Kanallar ro'yxatini ko'rish", "📨Habar yuborish"]), F.from_user.id.in_(cfg.admins))
 async def admin_messages(message: Message, state: FSMContext):
     await state.clear()
 
@@ -38,3 +38,8 @@ async def admin_messages(message: Message, state: FSMContext):
             await message.answer(f"Kanallar ro'yxati:\n{formated_channels}", reply_markup=admin_menu())
         else:
             await message.answer("Kanallar mavjud emas!", reply_markup=admin_menu())  
+    elif message.text == "📨Habar yuborish":
+        await state.set_state(SendMessage.meessage)
+        await message.answer("Habarni yuboring:", reply_markup=rmk())
+        
+

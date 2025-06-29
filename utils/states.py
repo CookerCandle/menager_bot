@@ -13,3 +13,6 @@ class ChannelAdd(StatesGroup):
 
 class ChannelDelete(StatesGroup):
     name = State()
+
+class SendMessage(StatesGroup):
+    message = State()
