@@ -70,6 +70,8 @@ async def handle_admin_confirmation(callback: CallbackQuery, state: FSMContext, 
     await callback.message.edit_reply_markup(reply_markup=None)
     
     if callback.data.endswith("yes"):
+        await callback.message.reply(text="Tastiqlandi✅")
+
         invite = await create_link(user_id, bot)
         if  invite is None:
             return
@@ -79,6 +81,8 @@ async def handle_admin_confirmation(callback: CallbackQuery, state: FSMContext, 
             reply_markup=main_menu()
         )
     elif callback.data.endswith("no"):
+        await callback.message.reply(text="Rad etildi❌")
+
         await bot.send_message(
             chat_id=int(user_id),
             text=f"Sizga guruhga qo'shilish uchun admin tomonidan ruxsat berilmadi. {admin_profile} ga yozing.",
