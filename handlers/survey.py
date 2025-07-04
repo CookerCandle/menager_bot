@@ -24,7 +24,7 @@ async def handler_experience(message: Message, state: FSMContext):
     await state.set_state(Survey.confirm)
 
     await message.answer("Guruxga qo'shilish uchun, biz hamkor bo'lgan brockerga, bizning havolamiz orqali ro'yxatdan o'tishingiz kerak.\n\n")
-    await message.answer(f"<a href='{exness_link}'>👉EXNESS👈</a>", reply_markup=exness_profile_markup())
+    await message.answer(f"<a href='{exness_link}'>👉VANTAGE👈</a>", reply_markup=exness_profile_markup())
 
 
 @router.message(Survey.expirience, F.voice)
@@ -33,7 +33,7 @@ async def handler_experience_voice(message: Message, state: FSMContext):
     await state.set_state(Survey.confirm)
 
     await message.answer("Guruxga qo'shilish uchun, biz hamkor bo'lgan brockerga, bizning havolamiz orqali ro'yxatdan o'tishingiz kerak.\n\n")
-    await message.answer(f"<a href='{exness_link}'>👉EXNESS👈</a>", reply_markup=exness_profile_markup())
+    await message.answer(f"<a href='{exness_link}'>👉VANTAGE👈</a>", reply_markup=exness_profile_markup())
 
 
 @router.callback_query(Survey.confirm, F.data.startswith("exness_profile_"))
@@ -42,15 +42,17 @@ async def handler_confirm(callback: CallbackQuery, state: FSMContext, bot: Bot):
 
     exness_profile = callback.data.split("exness_profile_")[1]
 
-    if exness_profile == "yes":
-        await callback.message.edit_text(f"<b>PARTNER LINK</b>👇👇👇\n{partner_link}")   
-        await bot.send_chat_action(callback.from_user.id, ChatAction.UPLOAD_VIDEO)
-        await asyncio.sleep(0.5)
-        await callback.message.answer_video(FSInputFile("sources/lesson-for-old.MOV"), caption="<b>Shu videodagi ko'rsatmalarga amal qiling va screenshot yuboring.</b>")
-    elif exness_profile == "no":
-        await bot.send_chat_action(callback.from_user.id, ChatAction.UPLOAD_VIDEO)
-        await asyncio.sleep(0.5)
-        await callback.message.answer_video(FSInputFile("sources/lesson-for-new.MOV"), caption="<b>Shu videodagi ko'rsatmalarga amal qiling va screenshot yuboring.</b>")
+    await callback.message.answer("Shu link orqali registratsiyadan o'ting va screenshot yuboring.")
+
+    # if exness_profile == "yes":
+    #     await callback.message.edit_text(f"<b>PARTNER LINK</b>👇👇👇\n{partner_link}")   
+    #     await bot.send_chat_action(callback.from_user.id, ChatAction.UPLOAD_VIDEO)
+    #     await asyncio.sleep(0.5)
+    #     await callback.message.answer_video(FSInputFile("sources/lesson-for-old.MOV"), caption="<b>Shu videodagi ko'rsatmalarga amal qiling va screenshot yuboring.</b>")
+    # elif exness_profile == "no":
+    #     await bot.send_chat_action(callback.from_user.id, ChatAction.UPLOAD_VIDEO)
+    #     await asyncio.sleep(0.5)
+    #     await callback.message.answer_video(FSInputFile("sources/lesson-for-new.MOV"), caption="<b>Shu videodagi ko'rsatmalarga amal qiling va screenshot yuboring.</b>")
 
 
 @router.message(Survey.confirm, F.photo)

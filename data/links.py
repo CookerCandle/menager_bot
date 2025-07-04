@@ -1,5 +1,5 @@
 instagram = "https://www.instagram.com/sbtradinguz?igsh=ZHdya3RxajBxa3E4"
 tel_number = "+99877-***-**-**"
 admin_profile = "@SbGroup0712"
-partner_link = "https://one.exnesstrack.org/a/zmhzwlylc9"
-exness_link = "https://one.exnesstrack.org/a/zmhzwlylc9"
+partner_link = "https://www.vantagemarkets.com/open-live-account/?affid=NzI2NTc4MQ=="
+exness_link = "https://www.vantagemarkets.com/open-live-account/?affid=NzI2NTc4MQ=="
